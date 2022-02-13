@@ -1,4 +1,4 @@
-class Grass {
+class LivingCreature{
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -25,21 +25,7 @@ class Grass {
                     found.push(this.directions[i])
                 }
             }
-
         }
         return found;
-
-    }
-
-    mult() {
-        var empty = random(this.chooseCell(0))
-        this.multiply++
-        if (empty && this.multiply > 1) {
-            var newX = empty[0]
-            var newY = empty[1]
-            matrix[newY][newX] = 1
-            var newGr = new Grass(newX, newY)
-            grassArr.push(newGr)
-        }
     }
 }

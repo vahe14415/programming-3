@@ -1,8 +1,7 @@
-class Sheep {
+class Wolf extends LivingCreature{
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.energy = 5;
+        super(x, y)
+        this.energy = 10;
         this.directions = [];
 
     }
@@ -20,7 +19,7 @@ class Sheep {
         ]
     }
 
-    chooseCell(character) {
+    chooseCell_1(character, character1) {
         this.getNewDirections()
         var found = []
         for (var i in this.directions) {
@@ -28,6 +27,8 @@ class Sheep {
             var y = this.directions[i][1]
             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
                 if (matrix[y][x] == character) {
+                    found.push(this.directions[i])
+                } else if (matrix[y][x] == character1) {
                     found.push(this.directions[i])
                 }
             }
@@ -39,56 +40,63 @@ class Sheep {
 
     mult() {
         var empty = random(this.chooseCell(0))
-        if (empty && this.energy > 6) {
+        if (empty && this.energy > 10) {
             var newX = empty[0]
             var newY = empty[1]
-            matrix[newY][newX] = 2
-            var xt = new Sheep(newX, newY)
-            sheepArr.push(xt)
-            this.energy = 5;
+            matrix[newY][newX] = 3
+            var wf = new Wolf(newX, newY)
+            wolfArr.push(wf)
+            this.energy = 10;
         }
     }
 
     move() {
-        var empty = random(this.chooseCell(0))
-        this.energy--;
+
+        var empty = random(this.chooseCell_1(0, 1))
         if (empty) {
             var newX = empty[0]
             var newY = empty[1]
-            matrix[newY][newX] = 2
-            matrix[this.y][this.x] = 0
 
+            if (matrix[newY][newX] == 0) {
+                matrix[newY][newX] = 3
+                matrix[this.y][this.x] = 0
+            }
+            else {
+                matrix[newY][newX] = 3
+                matrix[this.y][this.x] = 1
+            }
+            this.energy -= 2;
             this.x = newX
             this.y = newY
         }
     }
 
     eat() {
-        var food = random(this.chooseCell(1))
+        var food = random(this.chooseCell(2))
         if (food) {
             var newX = food[0]
             var newY = food[1]
-            matrix[newY][newX] = 2
+            matrix[newY][newX] = 3
             matrix[this.y][this.x] = 0
 
-            for (var i in grassArr) {
-                if (grassArr[i].x == newX && grassArr[i].y == newY) {
-                    grassArr.splice(i, 1)
+            for (var i in sheepArr) {
+                if (sheepArr[i].x === newX && sheepArr[i].y === newY) {
+                    sheepArr.splice(i, 1)
                 }
             }
 
             this.x = newX
             this.y = newY
-            this.energy += 1.5;
+            this.energy += 5;
         }
     }
 
     die() {
-        if (this.energy < 0) {
+        if (this.energy <= 0) {
             matrix[this.y][this.x] = 0
-            for (var i in sheepArr) {
-                if (sheepArr[i].x == this.x && sheepArr[i].y == this.y) {
-                    sheepArr.splice(i, 1)
+            for (var i in wolfArr) {
+                if (wolfArr[i].x === this.x && wolfArr[i].y === this.y) {
+                    wolfArr.splice(i, 1)
                 }
             }
         }
