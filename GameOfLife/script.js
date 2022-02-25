@@ -1,6 +1,4 @@
-let matrix = [
-
-];
+var socket = io();
 
 var side = 8;
 var grassArr = [];
@@ -10,14 +8,6 @@ var predatorArr = [];
 var zombieArr = [];
 
 function setup() {
-
-    for (let y = 0; y < 100; y++) {
-        matrix[y] = [];
-        for (let x = 0; x < 100; x++) {
-            matrix[y][x] = random([0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5]);
-        }
-    }
-
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
@@ -53,14 +43,12 @@ function setup() {
     frameRate(5);
     createCanvas(matrix[0].length * side, matrix.length * side);
     background('#acacac');
-
 }
 
 
 
 
 function draw() {
-
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
@@ -90,17 +78,10 @@ function draw() {
             }
 
             rect(x * side, y * side, side, side)
-
-
         }
     }
 
-
-
-
-
     for (var i in grassArr) {
-
         grassArr[i].mult()
     }
 
