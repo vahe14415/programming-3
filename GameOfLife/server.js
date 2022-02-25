@@ -16,11 +16,28 @@ server.listen(3000, () => {
 
 let matrix = [];
 
+function randomRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
 for (let y = 0; y < 100; y++) {
     matrix[y] = [];
     for (let x = 0; x < 100; x++) {
-        matrix[y][x] = random([0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5]);
+        //matrix[y][x] = random([0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5]);
+        matrix[y][x] = Math.floor(randomRange(0, 5))
     }
 }
 
 io.sockets.emit('send matrix', matrix)
+
+var grassArr = [];
+var sheepArr = [];
+var wolfArr = [];
+var predatorArr = [];
+var zombieArr = [];
+
+Grass = require("./Grass")
+Sheep = require("./Sheep")
+Wolf = require("./Wolf")
+Predator = require("./Predator")
+Zombie = require("./Zombie")
