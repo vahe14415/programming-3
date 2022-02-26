@@ -5,7 +5,6 @@ module.exports = class Sheep extends LivingCreature{
         super(x, y)
         this.energy = 5;
         this.directions = [];
-
     }
 
     getNewDirections() {

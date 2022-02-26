@@ -5,7 +5,6 @@ module.exports = class Wolf extends LivingCreature{
         super(x, y)
         this.energy = 10;
         this.directions = [];
-
     }
 
     getNewDirections() {
