@@ -14,6 +14,20 @@ server.listen(3000, () => {
     console.log('Connected');
 });
 
+let framerate = 10;
+
+grassArr = [];
+sheepArr = [];
+//wolfArr = [];
+//predatorArr = [];
+//zombieArr = [];
+
+Grass = require("./Grass");
+Sheep = require("./Sheep");
+//Wolf = require("./Wolf");
+//Predator = require("./Predator");
+//Zombie = require("./Zombie");
+
 matrix = [];
 
 function getRandomNumberFrom(min, max) 
@@ -23,18 +37,20 @@ function getRandomNumberFrom(min, max)
 
 function GenerateMatrix()
 {
-    for (let y = 0; y < 100; y++) 
+    for (let y = 0; y < 50; y++) 
     {
         matrix[y] = [];
-        for (let x = 0; x < 100; x++) 
+        for (let x = 0; x < 50; x++) 
         {
-            //matrix[y][x] = Math.floor(getRandomNumberFrom(0, 2))
-            if(y == 0 && x == 0)
+            matrix[y][x] = Math.floor(getRandomNumberFrom(0, 3))
+            
+            /*if(y == 24 && x == 24)
             {
-                matrix[y][x] = 1;
+                matrix[y][x] = 2;
                 continue;
             }
-             matrix[y][x] = 0;
+             matrix[y][x] = 0;*/
+             
         }
     }   
 }
@@ -43,19 +59,7 @@ GenerateMatrix();
 
 io.sockets.emit('send matrix', matrix)
 
-grassArr = [];
-sheepArr = [];
-wolfArr = [];
-predatorArr = [];
-zombieArr = [];
-
-Grass = require("./Grass");
-Sheep = require("./Sheep");
-Wolf = require("./Wolf");
-Predator = require("./Predator");
-Zombie = require("./Zombie");
-
-function createObject(matrix)
+function createObject()
 {
     for (var y = 0; y < matrix.length; y++) 
     {
@@ -71,7 +75,7 @@ function createObject(matrix)
                 var sh = new Sheep(x, y)
                 sheepArr.push(sh)
             }
-            else if (matrix[y][x] == 3) 
+            /*else if (matrix[y][x] == 3) 
             {
                 var wf = new Wolf(x, y)
                 wolfArr.push(wf)
@@ -85,7 +89,7 @@ function createObject(matrix)
             {
                 var zom = new Zombie(x, y)
                 zombieArr.push(zom);
-            }
+            }*/
         }
     }
     io.sockets.emit('send matrix', matrix)
@@ -93,20 +97,20 @@ function createObject(matrix)
 
 function doActionsOfLivingCreatures()
 {
-    for (var i in grassArr) 
+    for (let i in grassArr) 
     {
         grassArr[i].mult()
     }
 
-    /*for (var i in sheepArr) 
+    for (let i in sheepArr) 
     {
         sheepArr[i].eat()
         sheepArr[i].move()
         sheepArr[i].mult()
         sheepArr[i].die()
     }
-
-    for (var i in wolfArr) 
+/*
+    for (let i in wolfArr) 
     {
         wolfArr[i].eat()
         wolfArr[i].move()
@@ -114,7 +118,7 @@ function doActionsOfLivingCreatures()
         wolfArr[i].die()
     }
 
-    for (var i in predatorArr) 
+    for (let i in predatorArr) 
     {
         predatorArr[i].eat()
         predatorArr[i].move()
@@ -122,7 +126,7 @@ function doActionsOfLivingCreatures()
         predatorArr[i].die()
     }
 
-    for (var i in zombieArr) 
+    for (let i in zombieArr) 
     {
         zombieArr[i].eat()
         zombieArr[i].move()
@@ -133,9 +137,9 @@ function doActionsOfLivingCreatures()
     io.sockets.emit("send matrix", matrix);
 }
 
-setInterval(doActionsOfLivingCreatures, 1000);
+setInterval(doActionsOfLivingCreatures, 1000 / framerate);
 
 io.on('connection', function () 
 {
-    createObject(matrix)
+    createObject()
 });

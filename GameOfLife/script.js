@@ -1,17 +1,22 @@
 var socket = io();
-var cellSide = 8;
+var cellSide = 18;
 
 function setup() {
-    createCanvas(100 * cellSide, 100 * cellSide);
+    createCanvas(50 * cellSide, 50 * cellSide);
     background('#acacac');
 }
 
 function drawMatrix(matrix) {
-    for (var y = 0; y < 100; y++) 
+    for (var y = 0; y < 50; y++) 
     {
-        for (var x = 0; x < 100; x++) 
+        for (var x = 0; x < 50; x++) 
         {
-            if (matrix[y][x] == 1) 
+            if (matrix[y][x] == 0) 
+            {
+                noStroke();
+                fill("#acacac");
+            }
+            else if (matrix[y][x] == 1) 
             {
                 stroke("black");
                 fill("green");
@@ -21,12 +26,7 @@ function drawMatrix(matrix) {
                 stroke("black");
                 fill("yellow");
             }
-            else if (matrix[y][x] == 0) 
-            {
-                noStroke();
-                fill("#acacac");
-            }
-            else if (matrix[y][x] == 3) 
+            /*else if (matrix[y][x] == 3) 
             {
                 stroke("black");
                 fill("orange");
@@ -41,20 +41,14 @@ function drawMatrix(matrix) {
             {
                 stroke("red");
                 fill("black");
-            }
+            }*/
 
             rect(x * cellSide, y * cellSide, cellSide, cellSide)
         }
     }
 }
 
-setInterval
-(
-    function () 
-    {
-        socket.on('send matrix', drawMatrix)
-    }, 1000
-)
+socket.on('send matrix', drawMatrix)
 
 
 
