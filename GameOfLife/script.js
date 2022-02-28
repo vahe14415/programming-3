@@ -26,12 +26,12 @@ function drawMatrix(matrix) {
                 stroke("black");
                 fill("yellow");
             }
-            /*else if (matrix[y][x] == 3) 
+            else if (matrix[y][x] == 3) 
             {
                 stroke("black");
                 fill("orange");
             }
-            else if (matrix[y][x] == 4) 
+            /*else if (matrix[y][x] == 4) 
             {
                 stroke("black");
                 fill("red");
@@ -50,7 +50,15 @@ function drawMatrix(matrix) {
 
 socket.on('send matrix', drawMatrix)
 
+function kill() 
+{
+    socket.emit("kill")
+}
 
+function addCell(cell) 
+{
+    socket.emit("add " + cell)
+}
 
 
 

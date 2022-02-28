@@ -4,10 +4,10 @@ module.exports = class Wolf extends LivingCreature{
     constructor(x, y) {
         super(x, y)
         this.energy = 10;
-        this.directions = [];
+        //this.directions = [];
     }
 
-    getNewDirections() {
+    /*getNewDirections() {
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -18,9 +18,9 @@ module.exports = class Wolf extends LivingCreature{
             [this.x, this.y + 1],
             [this.x + 1, this.y + 1]
         ]
-    }
+    }*/
 
-    chooseCell_1(character, character1) {
+    /*chooseCell_1(character, character1) {
         this.getNewDirections()
         var found = []
         for (var i in this.directions) {
@@ -37,13 +37,16 @@ module.exports = class Wolf extends LivingCreature{
         }
         return found;
 
-    }
+    }*/
 
-    mult() {
-        var empty = random(this.chooseCell(0))
-        if (empty && this.energy > 10) {
-            var newX = empty[0]
-            var newY = empty[1]
+    mult() 
+    {
+        let emptyCells = super.chooseCell(0);
+        let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        if (emptyCell && this.energy > 11) 
+        {
+            var newX = emptyCell[0]
+            var newY = emptyCell[1]
             matrix[newY][newX] = 3
             var wf = new Wolf(newX, newY)
             wolfArr.push(wf)
@@ -51,18 +54,21 @@ module.exports = class Wolf extends LivingCreature{
         }
     }
 
-    move() {
-
-        var empty = random(this.chooseCell_1(0, 1))
-        if (empty) {
-            var newX = empty[0]
-            var newY = empty[1]
-
-            if (matrix[newY][newX] == 0) {
+    move() 
+    {
+        let cells = super.chooseCell(0, 1)
+        let cell = cells[Math.floor(Math.random() * cells.length)]
+        if (cell) 
+        {
+            let newX = cell[0]
+            let newY = cell[1]
+            if (matrix[newY][newX] == 0) 
+            {
                 matrix[newY][newX] = 3
                 matrix[this.y][this.x] = 0
             }
-            else {
+            else 
+            {
                 matrix[newY][newX] = 3
                 matrix[this.y][this.x] = 1
             }
@@ -73,7 +79,8 @@ module.exports = class Wolf extends LivingCreature{
     }
 
     eat() {
-        var food = random(this.chooseCell(2))
+        let foods = super.chooseCell(2);
+        let food = foods[Math.floor(Math.random() * foods.length)]
         if (food) {
             var newX = food[0]
             var newY = food[1]

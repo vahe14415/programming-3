@@ -35,4 +35,27 @@ module.exports = class LivingCreature
         }
         return found;
     }
+
+    chooseCell(character1, character2) 
+    {
+        let found = []
+        for (let i in this.directions) 
+        {
+            let x = this.directions[i][0]
+            let y = this.directions[i][1]
+            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) 
+            {
+                if (matrix[y][x] == character1) 
+                {
+                    found.push(this.directions[i])
+                }
+                else if (matrix[y][x] == character2) 
+                {
+                    found.push(this.directions[i])
+                }
+            }
+        }
+        return found;
+    }
+    
 }

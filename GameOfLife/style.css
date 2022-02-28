@@ -1,0 +1,37 @@
+body{
+    background-color: #191919;
+}
+
+/* Table */
+#legend {
+    position: absolute;
+    /* top: 6; */
+    right: 100;
+    width: 900px;
+    color: white;
+}
+
+.legend-color {
+    width: 30px;
+    height: 30px;
+}
+
+td {
+    border: 2px solid black;
+    font-size: 14px;
+    padding: 5px;
+}
+
+tr{
+    background: #0C0C0C;
+}
+
+
+/* Tools */
+
+.tools{
+    position: absolute;
+    top: 400px;
+    left: 1200px;
+    background-color: #0C0C0C;
+}

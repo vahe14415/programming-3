@@ -14,17 +14,17 @@ server.listen(3000, () => {
     console.log('Connected');
 });
 
-let framerate = 10;
+let framerate = 20;
 
 grassArr = [];
 sheepArr = [];
-//wolfArr = [];
+wolfArr = [];
 //predatorArr = [];
 //zombieArr = [];
 
 Grass = require("./Grass");
 Sheep = require("./Sheep");
-//Wolf = require("./Wolf");
+Wolf = require("./Wolf");
 //Predator = require("./Predator");
 //Zombie = require("./Zombie");
 
@@ -42,7 +42,7 @@ function GenerateMatrix()
         matrix[y] = [];
         for (let x = 0; x < 50; x++) 
         {
-            matrix[y][x] = Math.floor(getRandomNumberFrom(0, 3))
+            matrix[y][x] = Math.floor(getRandomNumberFrom(0, 4))
             
             /*if(y == 24 && x == 24)
             {
@@ -75,12 +75,12 @@ function createObject()
                 var sh = new Sheep(x, y)
                 sheepArr.push(sh)
             }
-            /*else if (matrix[y][x] == 3) 
+            else if (matrix[y][x] == 3) 
             {
                 var wf = new Wolf(x, y)
                 wolfArr.push(wf)
             }
-            else if (matrix[y][x] == 4) 
+            /*else if (matrix[y][x] == 4) 
             {
                 var pr = new Predator(x, y)
                 predatorArr.push(pr);
@@ -109,7 +109,7 @@ function doActionsOfLivingCreatures()
         sheepArr[i].mult()
         sheepArr[i].die()
     }
-/*
+
     for (let i in wolfArr) 
     {
         wolfArr[i].eat()
@@ -118,7 +118,7 @@ function doActionsOfLivingCreatures()
         wolfArr[i].die()
     }
 
-    for (let i in predatorArr) 
+    /*for (let i in predatorArr) 
     {
         predatorArr[i].eat()
         predatorArr[i].move()

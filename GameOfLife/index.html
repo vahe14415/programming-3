@@ -4,37 +4,7 @@
     <script src="socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
     <script src="script.js"></script>
-
-    <style>
-        #legend {
-            position: absolute;
-            top: 6;
-            right: 100;
-            width: 800px;
-        }
-
-        .legend-color {
-            width: 30px;
-            height: 30px;
-        }
-
-        td {
-            border: 1px solid black;
-            font-size: 14px;
-            padding-left: 5px;
-        }
-
-        .timer {
-            position: absolute;
-            ;
-            top: 500;
-            right: 300;
-            width: 500px;
-            border: 1px solid black;
-        }
-    </style>
-
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -99,6 +69,21 @@
             <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
         </tr>
     </table>
+
+    <div class="tools">
+        <h1 style="color:yellowgreen">Events</h1>
+        <ul>
+            <li>
+                <button onclick="kill()">Kill them all</button>
+            </li>
+            <li>
+                <button onclick="addGrass()">Add grass</button>
+            </li>
+            <li>
+                <button onclick="addGrassEater()">Add grass eater</button>
+            </li>
+        </ul>
+    </div>
 </body>
 
 </html>
