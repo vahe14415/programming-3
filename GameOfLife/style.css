@@ -1,13 +1,12 @@
 body{
     background-color: #191919;
+    display: flex;
 }
 
 /* Table */
 #legend {
-    position: absolute;
-    /* top: 6; */
-    right: 100;
-    width: 900px;
+    width: 1000px;
+    height: 500px;
     color: white;
 }
 
@@ -31,7 +30,9 @@ tr{
 
 .tools{
     position: absolute;
-    top: 400px;
-    left: 1200px;
+    top: 525px;
+    width: 983px;
+    height: 386px;
     background-color: #0C0C0C;
+    border-radius: 10px;
 }

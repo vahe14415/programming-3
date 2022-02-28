@@ -14,7 +14,7 @@ server.listen(3000, () => {
     console.log('Connected');
 });
 
-let framerate = 20;
+let framerate = 10;
 
 grassArr = [];
 sheepArr = [];
@@ -37,10 +37,10 @@ function getRandomNumberFrom(min, max)
 
 function GenerateMatrix()
 {
-    for (let y = 0; y < 50; y++) 
+    for (let y = 0; y < 20; y++) 
     {
         matrix[y] = [];
-        for (let x = 0; x < 50; x++) 
+        for (let x = 0; x < 20; x++) 
         {
             matrix[y][x] = Math.floor(getRandomNumberFrom(0, 4))
             
@@ -139,7 +139,43 @@ function doActionsOfLivingCreatures()
 
 setInterval(doActionsOfLivingCreatures, 1000 / framerate);
 
-io.on('connection', function () 
+function kill() 
 {
-    createObject()
+    grassArr = [];
+    sheepArr = [];
+    wolfArr = [];
+    predatorArr = [];
+    zombieArr = [];
+    for (let y = 0; y < matrix.length; y++) 
+        for (let x = 0; x < matrix[y].length; x++) 
+            matrix[y][x] = 0;
+
+    io.sockets.emit("send matrix", matrix);
+}
+
+function addCell(cell)
+{
+    console.log("Cell is " + cell)
+    for (var i = 0; i < 7; i++) 
+    {
+    var x = Math.floor(Math.random() * matrix[0].length)
+    var y = Math.floor(Math.random() * matrix.length)
+        if (matrix[y][x] == 0) 
+        {
+            matrix[y][x] = cell
+            if(cell == "grass")
+            {
+                var gr = new Grass(x, y, 1)
+                grassArr.push(gr)
+            }
+        }
+    }
+    io.sockets.emit("send matrix", matrix);
+}
+
+io.on('connection', function (socket) 
+{
+    createObject();
+    socket.on("kill", kill);
+    socket.on("add grass", addCell);
 });

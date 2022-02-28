@@ -1,15 +1,15 @@
 var socket = io();
-var cellSide = 18;
+var cellSide = 45;
 
 function setup() {
-    createCanvas(50 * cellSide, 50 * cellSide);
+    createCanvas(20 * cellSide, 20 * cellSide);
     background('#acacac');
 }
 
 function drawMatrix(matrix) {
-    for (var y = 0; y < 50; y++) 
+    for (var y = 0; y < 20; y++) 
     {
-        for (var x = 0; x < 50; x++) 
+        for (var x = 0; x < 20; x++) 
         {
             if (matrix[y][x] == 0) 
             {
@@ -57,7 +57,7 @@ function kill()
 
 function addCell(cell) 
 {
-    socket.emit("add " + cell)
+    socket.emit("add " + cell, cell)
 }
 
 
