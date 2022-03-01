@@ -10,7 +10,7 @@ module.exports = class Grass extends LivingCreature
 
     mult() 
     {
-        let emptyCells = super.chooseCell(0, this.directions3x3);
+        let emptyCells = super.chooseCell([0], this.directions3x3);
         let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         this.multiply++;
         if (emptyCell && this.multiply > 2) 

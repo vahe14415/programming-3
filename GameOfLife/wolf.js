@@ -8,7 +8,7 @@ module.exports = class Wolf extends LivingCreature{
 
     mult() 
     {
-        let emptyCells = super.chooseCell(0);
+        let emptyCells = super.chooseCell([0], this.directions3x3);
         let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         if (emptyCell && this.energy > 11) 
         {
@@ -23,7 +23,7 @@ module.exports = class Wolf extends LivingCreature{
 
     move() 
     {
-        let cells = super.chooseCell(0, 1)
+        let cells = super.chooseCell([0, 1], this.directions3x3)
         let cell = cells[Math.floor(Math.random() * cells.length)]
         if (cell) 
         {
@@ -47,7 +47,7 @@ module.exports = class Wolf extends LivingCreature{
 
     eat() 
     {
-        let foods = super.chooseCell(2);
+        let foods = super.chooseCell([2], this.directions3x3);
         let food = foods[Math.floor(Math.random() * foods.length)]
         if (food) 
         {

@@ -45,7 +45,7 @@ module.exports = class LivingCreature
         ]
     }
 
-    chooseCell(character, directions) 
+    chooseCell(cellTypes, directions) 
     {
         let found = []
         for (let i in directions) 
@@ -53,31 +53,10 @@ module.exports = class LivingCreature
             let x = directions[i][0]
             let y = directions[i][1]
             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) 
-                if (matrix[y][x] == character) found.push(directions[i]);
+                for(let j in cellTypes)
+                    if (matrix[y][x] == cellTypes[j]) found.push(directions[i]);
         }
         return found;
     }
-
-    /*chooseCell(character1, character2, directions) 
-    {
-        let found = []
-        for (let i in directions) 
-        {
-            let x = directions[i][0]
-            let y = directions[i][1]
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) 
-            {
-                if (matrix[y][x] == character1) 
-                {
-                    found.push(directions[i])
-                }
-                else if (matrix[y][x] == character2) 
-                {
-                    found.push(directions[i])
-                }
-            }
-        }
-        return found;
-    }*/
     
 }

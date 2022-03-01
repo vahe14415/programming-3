@@ -10,7 +10,7 @@ module.exports = class Sheep extends LivingCreature
 
     mult() 
     {
-        var emptyCells = super.chooseCell(0, this.directions3x3);
+        var emptyCells = super.chooseCell([0], this.directions3x3);
         var emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         if (emptyCell && this.energy > 6) 
         {
@@ -25,7 +25,7 @@ module.exports = class Sheep extends LivingCreature
 
     move() 
     {
-        let emptyCells = super.chooseCell(0, this.directions3x3);
+        let emptyCells = super.chooseCell([0], this.directions3x3);
         let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         this.energy--;
         if (emptyCell) 
@@ -42,7 +42,7 @@ module.exports = class Sheep extends LivingCreature
 
     eat() 
     {
-        let foods = super.chooseCell(1, this.directions3x3);
+        let foods = super.chooseCell([1], this.directions3x3);
         let food = foods[Math.floor(Math.random() * foods.length)];
         if (food) 
         {
