@@ -57,7 +57,7 @@ function kill(cellType)
 
 function addCell(cellType) 
 {
-    socket.emit("add cell", cellType)
+    socket.emit("add " + cellType, cellType)
 }
 
 

@@ -70,29 +70,53 @@
         </tr>
     </table>
 
-    <div class="tools">
-        <h1 style="color:yellowgreen">Events</h1>
-        <ul>
-            <li>
-                <button onclick="kill('all of them')">Kill them all</button>
-            </li>
-            <li>
-                <button onclick="addCell('grass')">Add grass</button>
-            </li>
-            <li>
-                <button onclick="addCell('sheep')">Add sheep</button>
-            </li>
-            <li>
-                <button onclick="addCell('wolf')">Add wolf</button>
-            </li>
-            <li>
-                <button onclick="addCell('predator')">Add predator</button>
-            </li>
-            <li>
-                <button onclick="addCell('zombie')">Add zombie</button>
-            </li>
-        </ul>
+    <div id="tools">
+        <div id="event">
+            <h1 id="eventTitle" style="color:yellowgreen">Events</h1>
+            <ul>
+                <li>
+                    <button  class="addButtons" onclick="addCell('all of them')">Generate</button>
+                </li>
+                <li>
+                    <button  class="addButtons" onclick="addCell('grass')">Add grass</button>
+                </li>
+                <li>
+                    <button class="addButtons" onclick="addCell('sheep')">Add sheep</button>
+                </li>
+                <li>
+                    <button class="addButtons" onclick="addCell('wolf')">Add wolf</button>
+                </li>
+                <li>
+                    <button class="addButtons" onclick="addCell('predator')">Add predator</button>
+                </li>
+                <li>
+                    <button class="addButtons" onclick="addCell('zombie')">Add zombie</button>
+                </li>
+            </ul>
+
+            <ul>
+                <li>
+                    <button class="killButtons" onclick="kill('all of them')">Kill Them All</button>
+                </li>
+                <li>
+                    <button class="killButtons" onclick="kill('grass')">Kill Grass</button>
+                </li>
+                <li>
+                    <button class="killButtons" onclick="kill('sheep')">Kill Sheep</button>
+                </li>
+                <li>
+                    <button class="killButtons" onclick="kill('wolf')">Kill Wolf</button>
+                </li>
+                <li>
+                    <button class="killButtons" onclick="kill('predator')">Kill Predator</button>
+                </li>
+                <li>
+                    <button class="killButtons" onclick="kill('zombie')">Kill Zombie</button>
+                </li>
+            </ul>
+        </div>
     </div>
-    
+
 </body>
+
 </html>

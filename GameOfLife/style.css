@@ -28,11 +28,63 @@ tr{
 
 /* Tools */
 
-.tools{
-    position: absolute;
-    top: 525px;
-    width: 983px;
-    height: 386px;
+#tools{
+    position: absolute; 
+    top: 510px; 
+    width: 978px;
+    height: 380px;
     background-color: #0C0C0C;
     border-radius: 10px;
+    padding: 10px;
+}
+
+#event{
+    display: flex;
+    width: 441.5px;
+    height: 380px;
+    background-color: #141414;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#eventTitle{
+    width: 441.5px;
+    text-align: center;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+    align-items: center;
+}
+
+.addButtons, .killButtons{
+    margin: 8px;
+    width: 200px;
+    height: 30px;
+    background: none;
+    text-transform: uppercase;
+    transition: 250ms;
+}
+
+.addButtons{
+    border: 2px solid #41f321;
+    color: #41f321;
+}
+
+.addButtons:hover{
+    background-color: #41f321;
+    color: black;
+}
+
+.killButtons:hover{
+    background-color: #FF2800;
+    color: black;
+}
+
+.killButtons{
+    border: 2px solid #FF2800;
+    color: #FF2800;
 }

@@ -39,18 +39,16 @@ function GenerateMatrix()
 {
     for (let y = 0; y < 20; y++) 
     {
-        matrix[y] = [];
+        //matrix[y] = [];
         for (let x = 0; x < 20; x++) 
         {
-            matrix[y][x] = Math.floor(getRandomNumberFrom(0, 4))
-            
-            /*if(y == 24 && x == 24)
-            {
-                matrix[y][x] = 2;
-                continue;
-            }
-             matrix[y][x] = 0;*/
-             
+            let randomNumber = Math.floor(getRandomNumberFrom(0, 4))
+            if (randomNumber == 0) createEmpty(x, y);
+            else if (randomNumber == 1) createGrass(x, y);
+            else if (randomNumber == 2) createSheep(x, y);
+            else if (randomNumber == 3) createWolf(x, y);
+            //else if (randomNumber == 4) createPredator(x, y);
+            //else if (randomNumber == 5) createZombie(x, y);
         }
     }   
 }
@@ -59,37 +57,47 @@ GenerateMatrix();
 
 io.sockets.emit('send matrix', matrix)
 
+function createEmpty(x, y)
+{
+    matrix[y][x] = 0;
+}
+
 function createGrass(x, y)
 {
+    matrix[y][x] == 1;
     let gr = new Grass(x, y)
     grassArr.push(gr)
 }
 
 function createSheep(x, y)
 {
+    matrix[y][x] == 2;
     let sh = new Sheep(x, y)
     sheepArr.push(sh)
 }
 
 function createWolf(x, y)
 {
+    matrix[y][x] == 3;
     let wf = new Wolf(x, y)
     wolfArr.push(wf)
 }
 
 function createPredator(x, y)
 {
-    var pr = new Predator(x, y)
+    matrix[y][x] == 4;
+    let pr = new Predator(x, y)
     predatorArr.push(pr);
 }
 
 function createZombie(x, y)
 {
-    var zom = new Zombie(x, y)
+    matrix[y][x] == 5;
+    let zom = new Zombie(x, y)
     zombieArr.push(zom);
 }
 
-function createObjects()
+/*function createObjects()
 {
     for (let y = 0; y < matrix.length; y++) 
     {
@@ -103,7 +111,7 @@ function createObjects()
         }
     }
     io.sockets.emit('send matrix', matrix)
-}
+}*/
 
 function doActionsOfLivingCreatures()
 {
@@ -184,17 +192,14 @@ function addCell(cellType)
         {
             if(cellType == "grass")
             {
-                matrix[y][x] = 1
                 createGrass(x, y)
             }
             else if(cellType == "sheep")
             {
-                matrix[y][x] = 2
                 createSheep(x, y)
             }
             else if(cellType == "wolf")
             {
-                matrix[y][x] = 3
                 createWolf(x, y)
             }
         }
@@ -205,7 +210,7 @@ function addCell(cellType)
 
 io.on('connection', function (socket) 
 {
-    createObjects();
+    GenerateMatrix();
     socket.on("kill all of them", (data) => kill(data));
     socket.on("add grass", (data) => addCell(data));
     socket.on("add sheep", (data) => addCell(data));
