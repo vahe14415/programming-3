@@ -3,13 +3,13 @@ let LivingCreature = require('./LivingCreature')
 module.exports = class Wolf extends LivingCreature{
     constructor(x, y) {
         super(x, y)
-        this.energy = 10;
+        this.energy = 10
     }
 
     mult() 
     {
-        let emptyCells = super.chooseCell([0], this.directions3x3);
-        let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        let emptyCells = super.chooseCell([0], this.directions3x3)
+        let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
         if (emptyCell && this.energy > 11) 
         {
             var newX = emptyCell[0]
@@ -17,7 +17,7 @@ module.exports = class Wolf extends LivingCreature{
             matrix[newY][newX] = 3
             var wf = new Wolf(newX, newY)
             wolfArr.push(wf)
-            this.energy = 10;
+            this.energy = 10
         }
     }
 
@@ -39,7 +39,7 @@ module.exports = class Wolf extends LivingCreature{
                 matrix[newY][newX] = 3
                 matrix[this.y][this.x] = 1
             }
-            this.energy -= 2;
+            this.energy -= 2
             this.x = newX
             this.y = newY
         }
@@ -47,7 +47,7 @@ module.exports = class Wolf extends LivingCreature{
 
     eat() 
     {
-        let foods = super.chooseCell([2], this.directions3x3);
+        let foods = super.chooseCell([2], this.directions3x3)
         let food = foods[Math.floor(Math.random() * foods.length)]
         if (food) 
         {
@@ -57,16 +57,12 @@ module.exports = class Wolf extends LivingCreature{
             matrix[this.y][this.x] = 0
 
             for (var i in sheepArr) 
-            {
                 if (sheepArr[i].x === newX && sheepArr[i].y === newY) 
-                {
                     sheepArr.splice(i, 1)
-                }
-            }
 
             this.x = newX
             this.y = newY
-            this.energy += 5;
+            this.energy += 5
         }
     }
 
@@ -76,12 +72,8 @@ module.exports = class Wolf extends LivingCreature{
         {
             matrix[this.y][this.x] = 0
             for (var i in wolfArr) 
-            {
                 if (wolfArr[i].x === this.x && wolfArr[i].y === this.y) 
-                {
                     wolfArr.splice(i, 1)
-                }
-            }
         }
     }
     

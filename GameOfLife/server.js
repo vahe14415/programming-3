@@ -1,117 +1,98 @@
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var fs = require("fs");
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+const fs = require("fs")
 
-app.use(express.static("."));
+app.use(express.static("."))
 
 app.get("/", function (request, respons) {
-    respons.redirect("index.html");
+    respons.redirect("index.html")
 });
 
 server.listen(3000, () => {
-    console.log('Connected');
+    console.log('Connected')
 });
 
-let framerate = 10;
+framerate = 10
+module.exports.matrixSize = 20
 
-grassArr = [];
-sheepArr = [];
-wolfArr = [];
-//predatorArr = [];
-//zombieArr = [];
+grassArr = []
+sheepArr = []
+wolfArr = []
+//predatorArr = []
+//zombieArr = []
 
-Grass = require("./Grass");
-Sheep = require("./Sheep");
-Wolf = require("./Wolf");
-//Predator = require("./Predator");
-//Zombie = require("./Zombie");
+Grass = require("./Grass")
+Sheep = require("./Sheep")
+Wolf = require("./Wolf")
+//Predator = require("./Predator")
+//Zombie = require("./Zombie")
 
-matrix = [];
+matrix = []
 
 function getRandomNumberFrom(min, max) 
 {
-    return Math.random() * (max - min) + min;
+    return Math.random() * (max - min) + min
 }
 
-function GenerateMatrix()
+function generateMatrix()
 {
-    for (let y = 0; y < 20; y++) 
+    for (let y = 0; y < matrixSize; y++) 
     {
-        //matrix[y] = [];
-        for (let x = 0; x < 20; x++) 
+        matrix[y] = []
+        for (let x = 0; x < matrixSize; x++) 
         {
             let randomNumber = Math.floor(getRandomNumberFrom(0, 4))
-            if (randomNumber == 0) createEmpty(x, y);
-            else if (randomNumber == 1) createGrass(x, y);
-            else if (randomNumber == 2) createSheep(x, y);
-            else if (randomNumber == 3) createWolf(x, y);
-            //else if (randomNumber == 4) createPredator(x, y);
-            //else if (randomNumber == 5) createZombie(x, y);
+
+            if (randomNumber == 0)      createEmpty(x, y)
+            else if (randomNumber == 1) createGrass(x, y)
+            else if (randomNumber == 2) createSheep(x, y)
+            else if (randomNumber == 3) createWolf(x, y)
+            //else if (randomNumber == 4) createPredator(x, y)
+            //else if (randomNumber == 5) createZombie(x, y)
         }
     }   
+
+    io.sockets.emit('send matrix', matrix)
 }
 
-GenerateMatrix();
-
-io.sockets.emit('send matrix', matrix)
+generateMatrix();
 
 function createEmpty(x, y)
 {
-    matrix[y][x] = 0;
+    matrix[y][x] = 0
 }
 
 function createGrass(x, y)
 {
-    matrix[y][x] == 1;
-    let gr = new Grass(x, y)
-    grassArr.push(gr)
+    matrix[y][x] = 1
+    grassArr.push(new Grass(x, y))
 }
 
 function createSheep(x, y)
 {
-    matrix[y][x] == 2;
-    let sh = new Sheep(x, y)
-    sheepArr.push(sh)
+    matrix[y][x] = 2
+    sheepArr.push(new Sheep(x, y))
 }
 
 function createWolf(x, y)
 {
-    matrix[y][x] == 3;
-    let wf = new Wolf(x, y)
-    wolfArr.push(wf)
+    matrix[y][x] = 3
+    wolfArr.push(new Wolf(x, y))
 }
 
 function createPredator(x, y)
 {
-    matrix[y][x] == 4;
-    let pr = new Predator(x, y)
-    predatorArr.push(pr);
+    matrix[y][x] = 4
+    predatorArr.push(new Predator(x, y))
 }
 
 function createZombie(x, y)
 {
-    matrix[y][x] == 5;
-    let zom = new Zombie(x, y)
-    zombieArr.push(zom);
+    matrix[y][x] = 5
+    zombieArr.push(new Zombie(x, y))
 }
-
-/*function createObjects()
-{
-    for (let y = 0; y < matrix.length; y++) 
-    {
-        for (let x = 0; x < matrix[y].length; x++) 
-        {
-            if (matrix[y][x] == 1)      createGrass(x, y);
-            else if (matrix[y][x] == 2) createSheep(x, y);
-            else if (matrix[y][x] == 3) createWolf(x, y);
-            else if (matrix[y][x] == 4) createPredator(x, y);
-            else if (matrix[y][x] == 5) createZombie(x, y);
-        }
-    }
-    io.sockets.emit('send matrix', matrix)
-}*/
 
 function doActionsOfLivingCreatures()
 {
@@ -152,33 +133,28 @@ function doActionsOfLivingCreatures()
         zombieArr[i].die()
     }*/
 
-    io.sockets.emit("send matrix", matrix);
+    io.sockets.emit("send matrix", matrix)
 }
 
-setInterval(doActionsOfLivingCreatures, 1000 / framerate);
+setInterval(doActionsOfLivingCreatures, 1000 / framerate)
 
 function kill(cellType) 
 {
-    grassArr = [];
-    sheepArr = [];
-    wolfArr = [];
-    predatorArr = [];
-    zombieArr = [];
     for (let y = 0; y < matrix.length; y++) 
         for (let x = 0; x < matrix[y].length; x++) 
         {
             if(cellType == "all of them")
             {
-                grassArr = [];
-                sheepArr = [];
-                wolfArr = [];
-                predatorArr = [];
-                zombieArr = [];
-                matrix[y][x] = 0;
+                grassArr = []
+                sheepArr = []
+                wolfArr = []
+                predatorArr = []
+                zombieArr = []
+                matrix[y][x] = 0
             }
         }
          
-    io.sockets.emit("send matrix", matrix);
+    io.sockets.emit("send matrix", matrix)
 }
 
 function addCell(cellType)
@@ -190,29 +166,24 @@ function addCell(cellType)
 
         if (matrix[y][x] == 0) 
         {
-            if(cellType == "grass")
-            {
-                createGrass(x, y)
-            }
-            else if(cellType == "sheep")
-            {
-                createSheep(x, y)
-            }
-            else if(cellType == "wolf")
-            {
-                createWolf(x, y)
-            }
+            if(cellType == "all of them")    generateMatrix()
+            else if(cellType == "grass")     createGrass(x, y)
+            else if(cellType == "sheep")     createSheep(x, y)
+            else if(cellType == "wolf")      createWolf(x, y)
+            //else if(cellType == "predator")  createWolf(x, y)
+            //else if(cellType == "zombie")    createZombie(x, y)
         }
     }
     
-    io.sockets.emit("send matrix", matrix);
+    io.sockets.emit("send matrix", matrix)
 }
 
 io.on('connection', function (socket) 
 {
-    GenerateMatrix();
-    socket.on("kill all of them", (data) => kill(data));
-    socket.on("add grass", (data) => addCell(data));
-    socket.on("add sheep", (data) => addCell(data));
-    socket.on("add wolf", (data) => addCell(data));
+    generateMatrix()
+    socket.on("kill all of them", (data) => kill(data))
+    socket.on("add all of them", (data) =>  addCell(data))
+    socket.on("add grass", (data) =>        addCell(data))
+    socket.on("add sheep", (data) =>        addCell(data))
+    socket.on("add wolf", (data) =>         addCell(data))
 });

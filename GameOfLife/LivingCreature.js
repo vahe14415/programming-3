@@ -2,8 +2,8 @@ module.exports = class LivingCreature
 {
     constructor(x, y) 
     {
-        this.x = x;
-        this.y = y;
+        this.x = x
+        this.y = y
         this.multiply = 0;
         this.directions3x3 = 
         [
@@ -56,7 +56,7 @@ module.exports = class LivingCreature
                 for(let j in cellTypes)
                     if (matrix[y][x] == cellTypes[j]) found.push(directions[i]);
         }
-        return found;
+        return found
     }
     
 }
