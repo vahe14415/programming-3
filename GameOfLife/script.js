@@ -1,8 +1,5 @@
 const socket = io()
-const server = require("./server")
-const cellSide = 45
-
-cel
+let cellSide = 45
 
 function setup() 
 {
