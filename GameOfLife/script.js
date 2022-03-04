@@ -52,14 +52,14 @@ function drawMatrix(matrix)
 
 socket.on('send matrix', drawMatrix)
 
-function kill(cellType) 
+function killCell(cellType) 
 {
-    socket.emit("kill " + cellType, cellType)
+    socket.emit("kill" + cellType, cellType)
 }
 
 function addCell(cellType) 
 {
-    socket.emit("add " + cellType, cellType)
+    socket.emit("add", cellType)
 }
 
 

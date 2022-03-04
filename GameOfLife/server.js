@@ -23,6 +23,8 @@ wolfArr = []
 //predatorArr = []
 //zombieArr = []
 
+arraysOfCells = [grassArr, sheepArr, wolfArr]
+
 Grass = require("./Grass")
 Sheep = require("./Sheep")
 Wolf = require("./Wolf")
@@ -50,6 +52,22 @@ function createMatrix()
 
 function createEmpty(x, y)
 {
+    if (matrix[y][x] == 0) return
+
+    outerLoop:
+    for(let i in arraysOfCells)
+        for(let j in arraysOfCells[i])
+        {
+            let cellIndexCoincides = arraysOfCells[i][j].index == matrix[y][x]
+            let cellPositionCoinCides = arraysOfCells[i][j].x == x && arraysOfCells[i][j].y == y
+            if(cellIndexCoincides && cellPositionCoinCides) 
+            {
+                arraysOfCells[i].splice(j, 1)
+                break outerLoop
+            }
+                
+        }
+
     matrix[y][x] = 0
 }
 
@@ -85,12 +103,6 @@ function createZombie(x, y)
 
 function destroyAll()
 {
-    grassArr = []
-    sheepArr = []
-    wolfArr = []
-    predatorArr = []   
-    zombieArr = []
-
     for (let y = 0; y < matrix.length; y++) 
         for (let x = 0; x < matrix[y].length; x++) 
             createEmpty(x, y)
@@ -98,7 +110,6 @@ function destroyAll()
 
 function destroyGrass()
 {
-    grassArr = []
     for (let y = 0; y < matrix.length; y++) 
         for (let x = 0; x < matrix[y].length; x++) 
             if(matrix[y][x] == 1) createEmpty(x, y)
@@ -199,7 +210,7 @@ function generateCells()
     io.sockets.emit("send matrix", matrix)
 }
 
-function kill(cellType) 
+function killCell(cellType) 
 {
     if (cellType == "all of them")   destroyAll()
     else if (cellType == "grass")    destroyGrass()
@@ -236,12 +247,6 @@ function addCell(cellType)
 io.on('connection', (socket) =>
 {
     createMatrix()
-    socket.on("kill all of them", (data) => kill(data))
-    socket.on("kill grass", (data) =>       kill(data))
-    socket.on("kill sheep", (data) =>       kill(data))
-    socket.on("kill wolf", (data) =>        kill(data))
-    socket.on("add all of them", (data) =>  addCell(data))
-    socket.on("add grass", (data) =>        addCell(data))
-    socket.on("add sheep", (data) =>        addCell(data))
-    socket.on("add wolf", (data) =>         addCell(data))
+    socket.on("kill", killCell)
+    socket.on("add", addCell)
 });

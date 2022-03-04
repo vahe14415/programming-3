@@ -2,9 +2,10 @@ let LivingCreature = require('./LivingCreature')
 
 module.exports = class Sheep extends LivingCreature
 {
-    constructor(x, y) 
+    constructor(x, y, index) 
     {
         super(x, y)
+        this.index = 2
         this.energy = 5
     }
 

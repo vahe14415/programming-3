@@ -2,9 +2,10 @@ let LivingCreature = require('./LivingCreature')
 
 module.exports = class Grass extends LivingCreature
 {
-    constructor(x, y) 
+    constructor(x, y, index) 
     {
         super(x, y)
+        this.index = 1
         this.multiply = 0
     }
 
