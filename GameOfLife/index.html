@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <table id="legend">
+    <!-- <table id="legend">
         <tr>
             <td class="legend-color">Գույն</td>
             <td>Անվանում</td>
@@ -68,11 +68,11 @@
             <td>Բազմանում է մոտակա տարածքներում, երբ էներգիան 50֊ից ավել է</td>
             <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
         </tr>
-    </table>
+    </table> -->
 
     <div id="tools">
-        <div id="event">
-            <h1 id="eventTitle" style="color:yellowgreen;">
+        <div class="toolDiv event">
+            <h1 class="title">
                 <span style="color: #41f321;">EVE</span><span style="color: #FF2800;">NTS</span>
             </h1>
             <ul>
@@ -98,24 +98,32 @@
 
             <ul>
                 <li>
-                    <button class="killButtons" onclick="kill('all of them')">Kill Them All</button>
+                    <button class="killButtons" onclick="killCell('all of them')">Kill Them All</button>
                 </li>
                 <li>
-                    <button class="killButtons" onclick="kill('grass')">Kill Grass</button>
+                    <button class="killButtons" onclick="killCell('grass')">Kill Grass</button>
                 </li>
                 <li>
-                    <button class="killButtons" onclick="kill('sheep')">Kill Sheep</button>
+                    <button class="killButtons" onclick="killCell('sheep')">Kill Sheep</button>
                 </li>
                 <li>
-                    <button class="killButtons" onclick="kill('wolf')">Kill Wolf</button>
+                    <button class="killButtons" onclick="killCell('wolf')">Kill Wolf</button>
                 </li>
                 <li>
-                    <button class="killButtons" onclick="kill('predator')">Kill Predator</button>
+                    <button class="killButtons" onclick="killCell('predator')">Kill Predator</button>
                 </li>
                 <li>
-                    <button class="killButtons" onclick="kill('zombie')">Kill Zombie</button>
+                    <button class="killButtons" onclick="killCell('zombie')">Kill Zombie</button>
                 </li>
             </ul>
+        </div>
+
+        <div class="toolDiv canvasProperties">
+            <h1 style="color: yellow;" class="title">CANVAS PROPERTIES</h1>
+            <form action="#" method="GET" id="form">
+                <input type="text" name="matrixSize">
+                <input type="submit">
+            </form>
         </div>
     </div>
 

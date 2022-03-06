@@ -19,7 +19,7 @@ module.exports = class Grass extends LivingCreature
             let newX = emptyCell[0]
             let newY = emptyCell[1]
             let newGrass = new Grass(newX, newY)
-            grassArr.push(newGrass)
+            grassArray.push(newGrass)
             matrix[newY][newX] = 1
             this.multiply = 0
         }

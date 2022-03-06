@@ -19,7 +19,7 @@ module.exports = class Sheep extends LivingCreature
             var newY = emptyCell[1]
             matrix[newY][newX] = 2
             var xt = new Sheep(newX, newY)
-            sheepArr.push(xt)
+            sheepArray.push(xt)
             this.energy = 5
         }
     }
@@ -52,9 +52,9 @@ module.exports = class Sheep extends LivingCreature
             matrix[newY][newX] = 2
             matrix[this.y][this.x] = 0
 
-            for (let i in grassArr) 
-                if (grassArr[i].x == newX && grassArr[i].y == newY) 
-                    grassArr.splice(i, 1)
+            for (let i in grassArray) 
+                if (grassArray[i].x == newX && grassArray[i].y == newY) 
+                    grassArray.splice(i, 1)
 
             this.x = newX
             this.y = newY
@@ -67,9 +67,9 @@ module.exports = class Sheep extends LivingCreature
         if (this.energy <= 0) 
         {
             matrix[this.y][this.x] = 0
-            for (var i in sheepArr) 
-                if (sheepArr[i].x == this.x && sheepArr[i].y == this.y) 
-                    sheepArr.splice(i, 1)
+            for (var i in sheepArray) 
+                if (sheepArray[i].x == this.x && sheepArray[i].y == this.y) 
+                    sheepArray.splice(i, 1)
         }
     }
 

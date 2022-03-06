@@ -1,4 +1,3 @@
-const { ifError } = require('assert')
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
@@ -15,24 +14,42 @@ server.listen(3000, () => {
     console.log('Connected')
 });
 
-framerate = 10
+let framerate = 10
+let defaultMatrixSize = 30
 
-grassArr = []
-sheepArr = []
-wolfArr = []
-//predatorArr = []
-//zombieArr = []
+grassArray = []
+sheepArray = []
+wolfArray = []
+//predatorArray = []
+//zombieArray = []
 
-arraysOfCells = [grassArr, sheepArr, wolfArr]
+setInterval(() => 
+{
+    console.log("----------------------------")
+    console.log("grass: " + grassArray.length)
+    console.log("sheep: " + sheepArray.length)
+    console.log("wolf: " + wolfArray.length)
+    console.log("cells:" + (grassArray.length + sheepArray.length + wolfArray.length))
+    console.log("----------------------------")
+},1000)
 
-Grass = require("./Grass")
-Sheep = require("./Sheep")
-Wolf = require("./Wolf")
+Grass = require("./grass")
+Sheep = require("./sheep")
+Wolf = require("./wolf")
 //Predator = require("./Predator")
 //Zombie = require("./Zombie")
 
 matrix = []
 createMatrix()
+
+function restart(matrixSize)
+{
+    defaultMatrixSize = matrixSize
+    for(let i = 1; i <= 5; i++)
+            destroy(i)
+
+    createMatrix()
+}
 
 function getRandomIntegerFrom(min, max) 
 {
@@ -41,149 +58,77 @@ function getRandomIntegerFrom(min, max)
 
 function createMatrix()
 {
-    for (let y = 0; y < 20; y++) 
+    matrix = []
+    for (let y = 0; y < defaultMatrixSize; y++) 
     {
         matrix[y] = []
-        for (let x = 0; x < 20; x++) matrix[y][x] = 0
+        for (let x = 0; x < defaultMatrixSize; x++) create(x, y, 0)
     }   
 
     io.sockets.emit('send matrix', matrix)
 }
 
-function createEmpty(x, y)
+function create(x, y, cellIndex)
 {
-    if (matrix[y][x] == 0) return
-
-    outerLoop:
-    for(let i in arraysOfCells)
-        for(let j in arraysOfCells[i])
-        {
-            let cellIndexCoincides = arraysOfCells[i][j].index == matrix[y][x]
-            let cellPositionCoinCides = arraysOfCells[i][j].x == x && arraysOfCells[i][j].y == y
-            if(cellIndexCoincides && cellPositionCoinCides) 
-            {
-                arraysOfCells[i].splice(j, 1)
-                break outerLoop
-            }
-                
-        }
-
-    matrix[y][x] = 0
+    matrix[y][x] = cellIndex
+    if      (cellIndex == 0) return
+    else if (cellIndex == 1) grassArray.push(new Grass(x, y))
+    else if (cellIndex == 2) sheepArray.push(new Sheep(x, y))
+    else if (cellIndex == 3) wolfArray.push(new Wolf(x, y))
+    else if (cellIndex == 4) predatorArray.push(new Predator(x, y))
+    else if (cellIndex == 5) zombieArray.push(new Zombie(x, y))
 }
 
-function createGrass(x, y)
+function destroy(cellIndex)
 {
-    matrix[y][x] = 1
-    grassArr.push(new Grass(x, y))
-}
+    if      (cellIndex == 1) grassArray = []
+    else if (cellIndex == 2) sheepArray = []
+    else if (cellIndex == 3) wolfArray = []
+    else if (cellIndex == 4) predatorArray = []
+    else if (cellIndex == 5) zombieArray = []
 
-function createSheep(x, y)
-{
-    matrix[y][x] = 2
-    sheepArr.push(new Sheep(x, y))
-}
-
-function createWolf(x, y)
-{
-    matrix[y][x] = 3
-    wolfArr.push(new Wolf(x, y))
-}
-
-function createPredator(x, y)
-{
-    matrix[y][x] = 4
-    predatorArr.push(new Predator(x, y))
-}
-
-function createZombie(x, y)
-{
-    matrix[y][x] = 5
-    zombieArr.push(new Zombie(x, y))
-}
-
-function destroyAll()
-{
     for (let y = 0; y < matrix.length; y++) 
         for (let x = 0; x < matrix[y].length; x++) 
-            createEmpty(x, y)
-}
-
-function destroyGrass()
-{
-    for (let y = 0; y < matrix.length; y++) 
-        for (let x = 0; x < matrix[y].length; x++) 
-            if(matrix[y][x] == 1) createEmpty(x, y)
-}
-
-function destroySheep()
-{
-    sheepArr = []
-    for (let y = 0; y < matrix.length; y++) 
-        for (let x = 0; x < matrix[y].length; x++) 
-            if(matrix[y][x] == 2) createEmpty(x, y)
-}
-
-function destroyWolf()
-{
-    wolfArr = []
-    for (let y = 0; y < matrix.length; y++) 
-        for (let x = 0; x < matrix[y].length; x++) 
-            if(matrix[y][x] == 3) createEmpty(x, y)
-}
-
-function destroyPredator()
-{
-    predatorArr = []
-    for (let y = 0; y < matrix.length; y++) 
-        for (let x = 0; x < matrix[y].length; x++) 
-            if(matrix[y][x] == 4) createEmpty(x, y)
-}
-
-function destroyZombie()
-{
-    zombieArr = []
-    for (let y = 0; y < matrix.length; y++) 
-        for (let x = 0; x < matrix[y].length; x++) 
-            if(matrix[y][x] == 5) createEmpty(x, y)
+            if (matrix[y][x] == cellIndex) create(x, y, 0)
 }
 
 function doActionsOfLivingCreatures()
 {
-    for (let i in grassArr) 
+    for (let i in grassArray) 
     {
-        grassArr[i].mult()
+        grassArray[i].mult()
     }
 
-    for (let i in sheepArr) 
+    for (let i in sheepArray) 
     {
-        sheepArr[i].eat()
-        sheepArr[i].move()
-        sheepArr[i].mult()
-        sheepArr[i].die()
+        sheepArray[i].eat()
+        sheepArray[i].move()
+        sheepArray[i].mult()
+        sheepArray[i].die()
     }
 
-    for (let i in wolfArr) 
+    for (let i in wolfArray) 
     {
-        wolfArr[i].eat()
-        wolfArr[i].move()
-        wolfArr[i].mult()
-        wolfArr[i].die()
+        wolfArray[i].eat()
+        wolfArray[i].move()
+        wolfArray[i].mult()
+        wolfArray[i].die()
     }
 
-    /*for (let i in predatorArr) 
+    /*for (let i in predatorArray) 
     {
-        predatorArr[i].eat()
-        predatorArr[i].move()
-        predatorArr[i].mult()
-        predatorArr[i].die()
+        predatorArray[i].eat()
+        predatorArray[i].move()
+        predatorArray[i].mult()
+        predatorArray[i].die()
     }
 
-    for (let i in zombieArr) 
+    for (let i in zombieArray) 
     {
-        zombieArr[i].eat()
-        zombieArr[i].move()
-        zombieArr[i].mult()
-        zombieArr[i].die()
+        zombieArray[i].eat()
+        zombieArray[i].move()
+        zombieArray[i].mult()
+        zombieArray[i].die()
     }*/
 
     io.sockets.emit("send matrix", matrix)
@@ -193,31 +138,24 @@ setInterval(doActionsOfLivingCreatures, 1000 / framerate)
 
 function generateCells()
 {
-    for (let y = 0; y < 20; y++) 
-    {
-        for (let x = 0; x < 20; x++) 
-        {
-            let randomNumber = getRandomIntegerFrom(1, 4)
+    for(let i = 1; i <= 5; i++)
+            destroy(i)
 
-            if (randomNumber == 1) createGrass(x, y)
-            else if (randomNumber == 2) createSheep(x, y)
-            else if (randomNumber == 3) createWolf(x, y)
-            //else if (randomNumber == 4) createPredator(x, y)
-            //else if (randomNumber == 5) createZombie(x, y)
-        }
-    }   
-    
-    io.sockets.emit("send matrix", matrix)
+    for (let y = 0; y < matrix.length; y++) 
+        for (let x = 0; x < matrix[y].length; x++) 
+            create(x, y, getRandomIntegerFrom(1, 4))
 }
 
 function killCell(cellType) 
 {
-    if (cellType == "all of them")   destroyAll()
-    else if (cellType == "grass")    destroyGrass()
-    else if (cellType == "sheep")    destroySheep()
-    else if (cellType == "wolf")     destroyWolf()
-    else if (cellType == "predator") destroyPredator()
-    else if (cellType == "zombie")   destroyZombie()
+    if (cellType == "all of them")
+        for(let i = 1; i <= 5; i++)
+            destroy(i)
+    else if (cellType == "grass")    destroy(1)
+    else if (cellType == "sheep")    destroy(2)
+    else if (cellType == "wolf")     destroy(3)
+    else if (cellType == "predator") destroy(4)
+    else if (cellType == "zombie")   destroy(5)
 
     io.sockets.emit("send matrix", matrix)
 }
@@ -233,11 +171,11 @@ function addCell(cellType)
         if (matrix[randomY][randomX] == 0) 
         {
             if(cellType == "all of them")    generateCells()
-            else if(cellType == "grass")     createGrass(randomX, randomY)
-            else if(cellType == "sheep")     createSheep(randomX, randomY)
-            else if(cellType == "wolf")      createWolf(randomX, randomY)
-            //else if(cellType == "predator")  createWolf(randomX, randomY)
-            //else if(cellType == "zombie")    createZombie(randomX, randomY)
+            else if(cellType == "grass")     create(randomX, randomY, 1)
+            else if(cellType == "sheep")     create(randomX, randomY, 2)
+            else if(cellType == "wolf")      create(randomX, randomY, 3)
+            //else if(cellType == "predator")  create(randomX, randomY, 4)
+            //else if(cellType == "zombie")    create(randomX, randomY, 5)
         }
     }
     
@@ -247,6 +185,7 @@ function addCell(cellType)
 io.on('connection', (socket) =>
 {
     createMatrix()
+    socket.on("restart", restart)
     socket.on("kill", killCell)
     socket.on("add", addCell)
 });

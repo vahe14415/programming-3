@@ -11,13 +11,13 @@ module.exports = class Wolf extends LivingCreature{
     {
         let emptyCells = super.chooseCell([0], this.directions3x3)
         let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
-        if (emptyCell && this.energy > 11) 
+        if (emptyCell && this.energy > 50) 
         {
             var newX = emptyCell[0]
             var newY = emptyCell[1]
             matrix[newY][newX] = 3
             var wf = new Wolf(newX, newY)
-            wolfArr.push(wf)
+            wolfArray.push(wf)
             this.energy = 10
         }
     }
@@ -57,13 +57,13 @@ module.exports = class Wolf extends LivingCreature{
             matrix[newY][newX] = 3
             matrix[this.y][this.x] = 0
 
-            for (var i in sheepArr) 
-                if (sheepArr[i].x === newX && sheepArr[i].y === newY) 
-                    sheepArr.splice(i, 1)
+            for (var i in sheepArray) 
+                if (sheepArray[i].x === newX && sheepArray[i].y === newY) 
+                    sheepArray.splice(i, 1)
 
             this.x = newX
             this.y = newY
-            this.energy += 5
+            this.energy += 10
         }
     }
 
@@ -72,9 +72,9 @@ module.exports = class Wolf extends LivingCreature{
         if (this.energy <= 0) 
         {
             matrix[this.y][this.x] = 0
-            for (var i in wolfArr) 
-                if (wolfArr[i].x === this.x && wolfArr[i].y === this.y) 
-                    wolfArr.splice(i, 1)
+            for (var i in wolfArray) 
+                if (wolfArray[i].x === this.x && wolfArray[i].y === this.y) 
+                    wolfArray.splice(i, 1)
         }
     }
     

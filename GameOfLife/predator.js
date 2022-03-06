@@ -36,7 +36,7 @@ module.exports = class Predator extends LivingCreature{
             var newY = empty[1]
             matrix[newY][newX] = 4
             var pr = new Predator(newX, newY)
-            predatorArr.push(pr)
+            predatorArray.push(pr)
             this.energy = 20;
         }
     }
@@ -75,9 +75,9 @@ module.exports = class Predator extends LivingCreature{
             matrix[newY][newX] = 4
             matrix[this.y][this.x] = 0
 
-            for (var i in wolfArr) {
-                if (wolfArr[i].x === newX && wolfArr[i].y === newY) {
-                    wolfArr.splice(i, 1)
+            for (var i in wolfArray) {
+                if (wolfArray[i].x === newX && wolfArray[i].y === newY) {
+                    wolfArray.splice(i, 1)
                 }
             }
 
@@ -90,9 +90,9 @@ module.exports = class Predator extends LivingCreature{
     die() {
         if (this.energy < 0) {
             matrix[this.y][this.x] = 0
-            for (var i in predatorArr) {
-                if (predatorArr[i].x === this.x && predatorArr[i].y === this.y) {
-                    predatorArr.splice(i, 1)
+            for (var i in predatorArray) {
+                if (predatorArray[i].x === this.x && predatorArray[i].y === this.y) {
+                    predatorArray.splice(i, 1)
                 }
             }
         }

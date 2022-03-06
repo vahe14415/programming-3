@@ -1,22 +1,25 @@
 const socket = io()
-let cellSide = 45
+
+let canvasSize = 900
+let matrixSize = 30
+let cellSide = 30
 
 function setup() 
 {
-    createCanvas(20 * cellSide, 20 * cellSide)
+    createCanvas(canvasSize, canvasSize)
     background('#acacac')
 }
 
 function drawMatrix(matrix) 
 {
-    for (var y = 0; y < 20; y++) 
+    for (var y = 0; y < matrixSize; y++) 
     {
-        for (var x = 0; x < 20; x++) 
+        for (var x = 0; x < matrixSize; x++) 
         {
             if (matrix[y][x] == 0) 
             {
                 noStroke()
-                fill("#acacac")
+                fill('#acacac')
             }
             else if (matrix[y][x] == 1) 
             {
@@ -38,7 +41,6 @@ function drawMatrix(matrix)
                 stroke("black")
                 fill("red")
             }
-
             else if (matrix[y][x] == 5) 
             {
                 stroke("red")
@@ -52,17 +54,27 @@ function drawMatrix(matrix)
 
 socket.on('send matrix', drawMatrix)
 
+var form = document.getElementById("form")
+
+console.log(form)
+
+//form.addEventListener("submit", restart)
+
+
+function restart()
+{
+    //matrixSize = form.querySelector('[name="matrixSize"]').value
+    //console.log(matrixSize)
+    //cellSide = canvasSize / matrixSize
+    //socket.emit('restart', matrixSize)
+}
+
 function killCell(cellType) 
 {
-    socket.emit("kill" + cellType, cellType)
+    socket.emit("kill", cellType)
 }
 
 function addCell(cellType) 
 {
     socket.emit("add", cellType)
 }
-
-
-
-
-

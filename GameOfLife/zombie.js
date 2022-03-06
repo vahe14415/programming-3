@@ -64,7 +64,7 @@ module.exports = class Zombie extends LivingCreature{
             var newY = empty[1]
             matrix[newY][newX] = 5
             var zb = new Zombie(newX, newY)
-            zombieArr.push(zb)
+            zombieArray.push(zb)
             this.energy = 50;
         }
     }
@@ -101,8 +101,8 @@ module.exports = class Zombie extends LivingCreature{
             matrix[this.y][this.x] = 0
 
             for (var i in predatorArr) {
-                if (predatorArr[i].x === newX && predatorArr[i].y === newY) {
-                    predatorArr.splice(i, 1)
+                if (predatorArray[i].x === newX && predatorArray[i].y === newY) {
+                    predatorArray.splice(i, 1)
                 }
             }
 
@@ -119,9 +119,9 @@ module.exports = class Zombie extends LivingCreature{
     die() {
         if (this.energy < 0) {
             matrix[this.y][this.x] = 0
-            for (var i in zombieArr) {
-                if (zombieArr[i].x == this.x && zombieArr[i].y == this.y) {
-                    zombieArr.splice(i, 1)
+            for (var i in zombieArray) {
+                if (zombieArray[i].x == this.x && zombieArray[i].y == this.y) {
+                    zombieArray.splice(i, 1)
                 }
             }
         }
