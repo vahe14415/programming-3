@@ -11,7 +11,7 @@ module.exports = class Wolf extends LivingCreature{
     {
         let emptyCells = super.chooseCell([0], this.directions3x3)
         let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
-        if (emptyCell && this.energy > 50) 
+        if (emptyCell && this.energy > 100) 
         {
             var newX = emptyCell[0]
             var newY = emptyCell[1]

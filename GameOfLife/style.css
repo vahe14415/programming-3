@@ -70,6 +70,15 @@ tr{
     top: 0;
 }
 
+/*#EventUl{
+    list-style: none;
+    padding: 0;
+}
+
+#propertyUl{
+    display: flex;
+}*/
+
 ul{
     list-style: none;
     padding: 0;

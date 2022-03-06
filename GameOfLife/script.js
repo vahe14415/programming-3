@@ -54,20 +54,19 @@ function drawMatrix(matrix)
 
 socket.on('send matrix', drawMatrix)
 
-var form = document.getElementById("form")
-
-console.log(form)
-
-//form.addEventListener("submit", restart)
-
-
 function restart()
 {
+    console.log("ooooh my!!!")
     //matrixSize = form.querySelector('[name="matrixSize"]').value
     //console.log(matrixSize)
     //cellSide = canvasSize / matrixSize
     //socket.emit('restart', matrixSize)
 }
+
+/*function changeCanvasSize(size){
+    matrixSize = size
+    socket.emit('change')
+}*/
 
 function killCell(cellType) 
 {
@@ -78,3 +77,5 @@ function addCell(cellType)
 {
     socket.emit("add", cellType)
 }
+
+

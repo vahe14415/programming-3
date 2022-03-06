@@ -14,7 +14,7 @@ server.listen(3000, () => {
     console.log('Connected')
 });
 
-let framerate = 10
+let framerate = 2.5
 let defaultMatrixSize = 30
 
 grassArray = []
