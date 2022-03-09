@@ -8,7 +8,7 @@ body{
 /* Canvas */
 
 #defaultCanvas0{
-    margin-left: 25px;
+    margin-left: 15px;
 }
 
 /* Table */
@@ -38,7 +38,7 @@ tr{
 
 #tools{
     width: 950px;
-    height: 380px;
+    height: 895px;
     background-color: #0C0C0C;
     border-radius: 10px;
     padding: 10px;
@@ -49,66 +49,221 @@ tr{
 .toolDiv{
     display: flex;
     width: 470px;
-    height: 380px;
+    height: 560px;
     background-color: #141414;
     border-radius: 10px;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
 }
 
-.canvasProperties
+.canvasPropertiesDiv
 {
     position: absolute;
     right: 10px;
 }
 
-.title{
+.cellsCountDiv{
+    width: 950px;
+    height: 325px;
+    position: absolute;
+    bottom: 10px;
+}
+
+.cellsCountDiv{
+    display: block;
+    align-items: center;
+}
+
+#eventTitle{
     width: 441.5px;
     text-align: center;
-    position: absolute;
-    top: 0;
+    margin-bottom: 0;
 }
 
-/*#EventUl{
+#seasonTitle{
+    margin: 0;
+    color: #A6E214;
+}
+
+#canvasSizeTitle{
+    color: yellow;
+}
+
+#framerateTitle{
+    color: cyan;
+}
+
+#statisticsTitle{
+    text-align: center;
+}
+
+.eventUl, .seasonUl, .canvasSizeUl, .framerateUl{
     list-style: none;
     padding: 0;
 }
 
-#propertyUl{
+.seasonUl{
     display: flex;
-}*/
-
-ul{
-    list-style: none;
-    padding: 0;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.addButtons, .killButtons{
+.canvasSizeUl{
+    display: flex;
+}
+
+.framerateUl{
+    display: flex;
+}
+
+.addButton, .killButton{
     margin: 8px;
     width: 200px;
     height: 30px;
     background: none;
-    text-transform: uppercase;
     transition: 250ms;
 }
 
-.addButtons{
+.addButton{
     border: 2px solid #41f321;
     color: #41f321;
 }
 
-.addButtons:hover{
+.addButton:hover{
     background-color: #41f321;
     color: black;
 }
 
-.killButtons:hover{
+.killButton:hover{
     background-color: #FF2800;
     color: black;
 }
 
-.killButtons{
+.killButton{
     border: 2px solid #FF2800;
     color: #FF2800;
+}
+
+.seasonButton, #autoButton{
+    margin: 8px;
+    width: 200px;
+    height: 30px;
+    background: none;
+    transition: 250ms;
+    border: 2px solid #0C0C0C;
+}
+
+#spring{
+    color: green;
+}
+
+#spring:hover{
+    color:black;
+    background-color: green;
+}
+
+#summer{
+    color: yellow;
+}
+
+#summer:hover{
+    color: black;
+    background-color: yellow;
+}
+
+#autumn{
+    color: #FF8C42;
+}
+
+#autumn:hover{
+    color: black;
+    background-color: #FF8C42;
+}
+
+#winter{
+    color: white;
+}
+
+#winter:hover{
+    color: black;
+    background-color: white;
+}
+
+#autoButton{
+    color: #007EFF;
+}
+
+#autoButton:hover{
+    color: black;
+    background-color: #007EFF;
+}
+
+.canvasSizeButton, .framerateButton{
+    background: none;
+    height: 40px;
+    width: 70px;
+    border: 2px solid #0C0C0C;
+    margin: 10px;
+    transition: 250ms;
+}
+
+.canvasSizeButton{
+    color: darkgoldenrod;
+}
+
+.canvasSizeButton:hover{
+    background-color: #272727;
+}
+
+.framerateButton{
+    color: cyan;
+    font-size: 17px;
+}
+
+.framerateButton:hover{
+    background-color: #272727;
+}
+
+.framerateButton:active{
+    border: 2px solid cyan;
+    transition: 100ms;
+}
+
+#framerate{
+    margin-bottom: 0;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: cyan;
+}
+
+.statisticContainer{
+    display: flex;
+    margin: 20px;
+}
+
+.progressBarBackground{
+    height: 30px;
+    width: 750px;
+    background-color: #2C2C2C;
+    margin: 0px;
+    position: relative;
+}
+
+.progressBarName{
+    margin: 0;
+    width: 140px;
+}
+
+.progress-bar{
+   background-color: green;
+   width: 0;
+   height: 100%;
+}
+
+.cellCount{
+    margin: 4px;
+    position: absolute;
+    right: 50%;
+    color: white;
 }

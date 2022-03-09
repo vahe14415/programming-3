@@ -2,24 +2,29 @@ let LivingCreature = require('./LivingCreature')
 
 module.exports = class Sheep extends LivingCreature
 {
-    constructor(x, y, index) 
+    constructor(x, y) 
     {
         super(x, y)
-        this.index = 2
         this.energy = 5
     }
 
     mult() 
     {
-        var emptyCells = super.chooseCell([0], this.directions3x3)
-        var emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
+        let emptyCells = super.chooseCell([0], this.directions3x3)
+        let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
         if (emptyCell && this.energy > 6) 
         {
-            var newX = emptyCell[0]
-            var newY = emptyCell[1]
+            let newX = emptyCell[0]
+            let newY = emptyCell[1]
+
+            if(matrix[newY][newX] == 1)
+                for(let i in grassArray)
+                    if(grassArray[i].x == newX && grassArray[i].y == newY)
+                        grassArray.splice(i, 1)
+                        
             matrix[newY][newX] = 2
-            var xt = new Sheep(newX, newY)
-            sheepArray.push(xt)
+            let newSheep = new Sheep(newX, newY)
+            sheepArray.push(newSheep)
             this.energy = 5
         }
     }
@@ -35,7 +40,6 @@ module.exports = class Sheep extends LivingCreature
             let newY = emptyCell[1]
             matrix[newY][newX] = 2
             matrix[this.y][this.x] = 0
-
             this.x = newX
             this.y = newY
         }
@@ -51,7 +55,7 @@ module.exports = class Sheep extends LivingCreature
             let newY = food[1]
             matrix[newY][newX] = 2
             matrix[this.y][this.x] = 0
-
+            
             for (let i in grassArray) 
                 if (grassArray[i].x == newX && grassArray[i].y == newY) 
                     grassArray.splice(i, 1)

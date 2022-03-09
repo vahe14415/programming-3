@@ -3,11 +3,118 @@
 <head>
     <script src="socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
-    <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <div id="tools">
+        <div class="toolDiv eventDiv">
+            <h1 id="eventTitle">
+                <span style="color: #41f321;">EVE</span><span style="color: #FF2800;">NTS</span>
+            </h1>
+            <ul class="eventUl">
+                <li><button  class="addButton" onclick="addCell()">GENERATE</button> </li>
+                <li> <button  class="addButton" onclick="addCell(1)">ADD GRASS</button> </li>
+                <li><button class="addButton" onclick="addCell(2)">ADD SHEEP</button></li>
+                <li> <button class="addButton" onclick="addCell(3)">ADD WOLF</button>  </li>
+                <li><button class="addButton" onclick="addCell(4)">ADD PREDATOR</button></li>
+                <li><button class="addButton" onclick="addCell(5)">ADD ZOMBIE</button></li>
+            </ul>
+
+            <ul class="eventUl">
+                <li><button class="killButton" onclick="killCell()">KILL THEM ALL</button></li>
+                <li><button class="killButton" onclick="killCell(1)">KILL GRASS</button></li>
+                <li><button class="killButton" onclick="killCell(2)">KILL SHEEP</button></li>
+                <li><button class="killButton" onclick="killCell(3)">KILL WOLF</button></li>
+                <li><button class="killButton" onclick="killCell(4)">KILL PREDATOR</button></li>
+                <li><button class="killButton" onclick="killCell(5)">KILL ZOMBIE</button></li>
+            </ul>
+
+            <h1 id="seasonTitle">SEASONS</h1>
+
+            <ul class="seasonUl">
+                <li><button id="spring" class="seasonButton">SPRING</button></li>
+                <li><button id="summer" class="seasonButton">SUMMOR</button></li>
+                <li><button id="autumn" class="seasonButton">AUTUMN</button></li>
+                <li><button id="winter" class="seasonButton">WINTER</button></li>
+                <li><button id="autoButton">CHANGE AUTOMATICALԼY</button></li>
+            </ul>
+        </div>
+
+        <div class="toolDiv canvasPropertiesDiv">
+            <h1 id="canvasSizeTitle">CANVAS SIZE</h1>
+            <ul class="canvasSizeUl">
+                <li><button class="canvasSizeButton">10X10</button></li>
+                <li><button class="canvasSizeButton">20X20</button></li>
+                <li><button class="canvasSizeButton">30X30</button></li>
+                <li><button class="canvasSizeButton">40X40</button></li>
+                <li><button class="canvasSizeButton">50X50</button></li>
+            </ul>
+
+            <h1 id="framerateTitle">FRAMERATE</h1>
+            <ul class="framerateUl">
+                <li><button class="framerateButton">-5</button></li>
+                <li><button class="framerateButton">-1</button></li>
+                <li><h1 id="framerate">60</h1></li>
+                <li><button class="framerateButton">+1</button></li>
+                <li><button class="framerateButton">+5</button></li>
+            </ul>
+        </div>
+
+        <div class="toolDiv cellsCountDiv">
+            <h1 id="statisticsTitle">
+                <span style="color: #41f321; margin-right: 20px;">LIVING</span>
+                <span style="color: #FF2800;">CREATURE</span>
+                <span style="color: chocolate; margin-left: 20px;">STATISTICS</span>  
+            </h1>
+            
+            <div class="statisticContainer">
+                <h2 class="progressBarName" style="color: chartreuse;">GRASS</h2>
+                <div class="progressBarBackground">  
+                    <div style="background-color: chartreuse;" class="progress-bar">
+                        <h3 class="cellCount">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="statisticContainer">
+                <h2 class="progressBarName" style="color: gold;">SHEEP</h2>
+                <div class="progressBarBackground"> 
+                    <div style="background-color: gold;" class="progress-bar">
+                        <h3 class="cellCount">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="statisticContainer">
+                <h2 class="progressBarName" style="color: chocolate;">WOLF</h2>
+                <div class="progressBarBackground">  
+                    <div style="background-color: chocolate;" class="progress-bar">
+                        <h3 class="cellCount">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="statisticContainer">
+                <h2 class="progressBarName" style="color: darkred;">PREDAOR</h2>
+                <div class="progressBarBackground"> 
+                    <div class="progress-bar" style="background-color: darkred;">
+                        <h3 class="cellCount">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="statisticContainer">
+                <h2 class="progressBarName" style="color: black;">ZOMBIE</h2>
+                <div class="progressBarBackground"> 
+                    <div style="background-color: black;" class="progress-bar">
+                        <h3 class="cellCount">0</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- <table id="legend">
         <tr>
             <td class="legend-color">Գույն</td>
@@ -70,77 +177,10 @@
         </tr>
     </table> -->
 
-    <div id="tools">
-        <div class="toolDiv event">
-            <h1 class="title">
-                <span style="color: #41f321;">EVE</span><span style="color: #FF2800;">NTS</span>
-            </h1>
-            <ul>
-                <li>
-                    <button  class="addButtons" onclick="addCell('all of them')">Generate</button>
-                </li>
-                <li>
-                    <button  class="addButtons" onclick="addCell('grass')">Add grass</button>
-                </li>
-                <li>
-                    <button class="addButtons" onclick="addCell('sheep')">Add sheep</button>
-                </li>
-                <li>
-                    <button class="addButtons" onclick="addCell('wolf')">Add wolf</button>
-                </li>
-                <li>
-                    <button class="addButtons" onclick="addCell('predator')">Add predator</button>
-                </li>
-                <li>
-                    <button class="addButtons" onclick="addCell('zombie')">Add zombie</button>
-                </li>
-            </ul>
-
-            <ul id="EventUl">
-                <li>
-                    <button class="killButtons" onclick="killCell('all of them')">Kill Them All</button>
-                </li>
-                <li>
-                    <button class="killButtons" onclick="killCell('grass')">Kill Grass</button>
-                </li>
-                <li>
-                    <button class="killButtons" onclick="killCell('sheep')">Kill Sheep</button>
-                </li>
-                <li>
-                    <button class="killButtons" onclick="killCell('wolf')">Kill Wolf</button>
-                </li>
-                <li>
-                    <button class="killButtons" onclick="killCell('predator')">Kill Predator</button>
-                </li>
-                <li>
-                    <button class="killButtons" onclick="killCell('zombie')">Kill Zombie</button>
-                </li>
-            </ul>
-        </div>
-
-        <div class="toolDiv canvasProperties">
-            <h1 style="color: yellow;" class="title">CANVAS PROPERTIES</h1>
-            <ul id="propertyUl">
-                <li>
-                    <button class="canvasSizeButtons">10X10</button>
-                </li>
-                <li>
-                    <button class="canvasSizeButtons">20X20</button>
-                </li>
-                <li>
-                    <button class="canvasSizeButtons">30X30</button>
-                </li>
-                <li>
-                    <button class="canvasSizeButtons">40X40</button>
-                </li>
-                <li>
-                    <button class="canvasSizeButtons">50X50</button>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-   
+    <script src="script.js"></script>
+    <script src="season.js"></script>
+    <script src="canvasProperty.js"></script>
+    <script src="framerate.js"></script>
+    <script src="statistic.js"></script>
 </body>
-
 </html>

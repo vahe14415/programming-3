@@ -2,10 +2,9 @@ let LivingCreature = require('./LivingCreature')
 
 module.exports = class Grass extends LivingCreature
 {
-    constructor(x, y, index) 
+    constructor(x, y) 
     {
         super(x, y)
-        this.index = 1
         this.multiply = 0
     }
 
@@ -13,8 +12,13 @@ module.exports = class Grass extends LivingCreature
     {
         let emptyCells = super.chooseCell([0], this.directions3x3)
         let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
-        this.multiply++
-        if (emptyCell && this.multiply > 2) 
+        
+        if (season == "spring") this.multiply += 100
+        else if (season == "summer") this.multiply += 50
+        else if (season == "autumn") this.multiply += 20
+        else if (season == "winter") this.multiply += 10
+
+        if (emptyCell && this.multiply >= 100) 
         {
             let newX = emptyCell[0]
             let newY = emptyCell[1]

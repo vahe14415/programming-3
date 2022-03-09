@@ -1,8 +1,8 @@
 const socket = io()
 
-let canvasSize = 900
 let matrixSize = 30
-let cellSide = 30
+const canvasSize = 915
+let cellSide = canvasSize / matrixSize
 
 function setup() 
 {
@@ -24,7 +24,10 @@ function drawMatrix(matrix)
             else if (matrix[y][x] == 1) 
             {
                 stroke("black")
-                fill("green")
+                if(season == "spring") fill("#00FF00")
+                else if (season == "summer") fill("#00FF64")
+                else if (season == "autumn") fill("#596B00")
+                else if (season == "winter") fill("white")
             }
             else if (matrix[y][x] == 2) 
             {
@@ -36,7 +39,7 @@ function drawMatrix(matrix)
                 stroke("black")
                 fill("orange")
             }
-            /*else if (matrix[y][x] == 4) 
+            else if (matrix[y][x] == 4) 
             {
                 stroke("black")
                 fill("red")
@@ -45,7 +48,7 @@ function drawMatrix(matrix)
             {
                 stroke("red")
                 fill("black")
-            }*/
+            }
 
             rect(x * cellSide, y * cellSide, cellSide, cellSide)
         }
@@ -54,19 +57,12 @@ function drawMatrix(matrix)
 
 socket.on('send matrix', drawMatrix)
 
-function restart()
+function changeCanvasSize(size)
 {
-    console.log("ooooh my!!!")
-    //matrixSize = form.querySelector('[name="matrixSize"]').value
-    //console.log(matrixSize)
-    //cellSide = canvasSize / matrixSize
-    //socket.emit('restart', matrixSize)
-}
-
-/*function changeCanvasSize(size){
     matrixSize = size
-    socket.emit('change')
-}*/
+    cellSide = canvasSize / matrixSize
+    socket.emit("change canvas size", size)
+}
 
 function killCell(cellType) 
 {

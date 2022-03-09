@@ -1,24 +1,25 @@
 let LivingCreature = require('./LivingCreature')
 
-module.exports = class Wolf extends LivingCreature{
-    constructor(x, y, index) {
+module.exports = class Wolf extends LivingCreature
+{
+    constructor(x, y) 
+    {
         super(x, y)
-        this.index = 3
-        this.energy = 10
+        this.energy = 20
     }
 
     mult() 
     {
         let emptyCells = super.chooseCell([0], this.directions3x3)
         let emptyCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
-        if (emptyCell && this.energy > 100) 
+        if (emptyCell && this.energy > 50) 
         {
-            var newX = emptyCell[0]
-            var newY = emptyCell[1]
+            let newX = emptyCell[0]
+            let newY = emptyCell[1]
             matrix[newY][newX] = 3
-            var wf = new Wolf(newX, newY)
-            wolfArray.push(wf)
-            this.energy = 10
+            let newWolf = new Wolf(newX, newY)
+            wolfArray.push(newWolf)
+            this.energy = 20
         }
     }
 
@@ -30,17 +31,15 @@ module.exports = class Wolf extends LivingCreature{
         {
             let newX = cell[0]
             let newY = cell[1]
-            if (matrix[newY][newX] == 0) 
-            {
-                matrix[newY][newX] = 3
-                matrix[this.y][this.x] = 0
-            }
-            else 
-            {
-                matrix[newY][newX] = 3
-                matrix[this.y][this.x] = 1
-            }
-            this.energy -= 2
+            matrix[this.y][this.x] = matrix[newY][newX]
+            matrix[newY][newX] = 3
+
+            if (matrix[newY][newX] == 1)
+                for (let i in grassArray)
+                    if (grassArray[i].x == newX && grassArray[i].y == newY)
+                        grassArray.splice(i, 1)    
+
+            this.energy--
             this.x = newX
             this.y = newY
         }
@@ -58,7 +57,7 @@ module.exports = class Wolf extends LivingCreature{
             matrix[this.y][this.x] = 0
 
             for (var i in sheepArray) 
-                if (sheepArray[i].x === newX && sheepArray[i].y === newY) 
+                if (sheepArray[i].x == newX && sheepArray[i].y == newY) 
                     sheepArray.splice(i, 1)
 
             this.x = newX
@@ -73,7 +72,7 @@ module.exports = class Wolf extends LivingCreature{
         {
             matrix[this.y][this.x] = 0
             for (var i in wolfArray) 
-                if (wolfArray[i].x === this.x && wolfArray[i].y === this.y) 
+                if (wolfArray[i].x == this.x && wolfArray[i].y == this.y) 
                     wolfArray.splice(i, 1)
         }
     }
